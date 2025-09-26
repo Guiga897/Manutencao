@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sistema de Manutencao</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-
 <body>
   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
@@ -34,24 +31,24 @@
           <td th:text="${manutencao.item}">-----</td>
           <td th:text="${manutencao.description}">-----</td>
           <td th:text="${#temporals.format(manutencao.createdAt)}">-----</td>
-          <td th:text="${#temporals.format(manutencao.finisheadAt)}">-----</td>
+          <td th:text="${manutencao.finisheadAt != null ? #temporals.format(manutencao.finisheadAt) : '---'}">-----</td>
           <td>
             <form class="d-inline" th:action="@{/manutencao/finish/{id}(id=${manutencao.id})}" method="post">
-              <button type="submit" class="btn btn-sm btn-primary" th:classappend="${manutencao.finisheadAt} ? 'disabled' : ''">Finalizar</button>
+              <button type="submit" class="btn btn-sm btn-primary" th:attr="disabled=${manutencao.finisheadAt != null}">Finalizar</button>
             </form>
-            </form>
-            <a th:href="@{/manutencao/edit/{id}(id=${manutencao.id})}" class="btn btn-sm btn-secodary" th:classappend="${manutencao.finisheadAt} ? 'disabled' : ''"s>Editar</a>
+
+            <a th:href="@{/manutencao/edit/{id}(id=${manutencao.id})}" class="btn btn-sm btn-secondary" th:attr="aria-disabled=${manutencao.finisheadAt != null}">Editar</a>
+
             <a th:href="@{/manutencao/delete/{id}(id=${manutencao.id})}" class="btn btn-sm btn-danger">Excluir</a>
           </td>
         </tr>
       </tbody>
     </table>
     <p th:if="${#lists.isEmpty(manutencoes)}">Nenhuma manutenção cadastrada.</p>
-    <a th:href="@{manutencao/create}" class="btn btn-sm btn-primary">Nova manutenção</a>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-</body>
 
+    <!-- CORREÇÃO: caminho absoluto -->
+    <a th:href="@{/manutencao/create}" class="btn btn-sm btn-primary">Nova manutenção</a>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

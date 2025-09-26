@@ -26,13 +26,11 @@ import jakarta.validation.Valid;
 public class ManutencaoController {
 
     @Autowired
-    ManutencaoRepository manutencaoRepository;
+    private ManutencaoRepository manutencaoRepository;
 
     @GetMapping
     public ModelAndView list() {
-
-        return new ModelAndView(
-                "list", Map.of("manutencoes", manutencaoRepository.findAll(Sort.by("item"))));
+        return new ModelAndView("list", Map.of("manutencoes", manutencaoRepository.findAll(Sort.by("item"))));
     }
 
     @GetMapping("/create")
@@ -45,8 +43,7 @@ public class ManutencaoController {
         if (result.hasErrors())
             return "form";
 
-            manutencaoRepository.save(manutencao);
-
+        manutencaoRepository.save(manutencao);
         return "redirect:/manutencao";
     }
 
@@ -61,33 +58,41 @@ public class ManutencaoController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@Valid Manutencao manutencao, BindingResult result) {
+    public String edit(@PathVariable Long id, @Valid Manutencao manutencao, BindingResult result) {
         if (result.hasErrors())
             return "form";
 
-            manutencaoRepository.save(manutencao);
+        // garante que estamos atualizando a entidade correta
+        manutencao.setId(id);
+        manutencaoRepository.save(manutencao);
 
         return "redirect:/manutencao";
     }
 
-    @GetMapping("delete/{id}")
-    public ModelAndView delete(@PathVariable Long id){
+    // --- CORREÇÃO: adicionei barra inicial nos mappings de delete ---
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable Long id) {
         var manutencao = manutencaoRepository.findById(id);
         if (manutencao.isPresent())
             return new ModelAndView("delete", Map.of("manutencao", manutencao.get()));
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("delete/{id}")
-    public String delete(Manutencao manutencao){
-        manutencaoRepository.delete(manutencao);
+    // POST de delete agora recebe o id na URL e deleta por id (mais robusto)
+    @PostMapping("/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
+        if (!manutencaoRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        manutencaoRepository.deleteById(id);
         return "redirect:/manutencao";
     }
 
     @PostMapping("/finish/{id}")
-    public String finish(@PathVariable Long id){
+    public String finish(@PathVariable Long id) {
         var optionalmanutencao = manutencaoRepository.findById(id);
-        if(optionalmanutencao.isPresent()){
+        if (optionalmanutencao.isPresent()) {
             var manutencao = optionalmanutencao.get();
             manutencao.setFinisheadAt(LocalDate.now());
             manutencaoRepository.save(manutencao);
