@@ -9,10 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,11 +23,18 @@ import jakarta.validation.Valid;
 public class ManutencaoController {
 
     @Autowired
-    private ManutencaoRepository manutencaoRepository;
+    ManutencaoRepository manutencaoRepository;
+
+    // 🔹 Redireciona "/" para a listagem
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/manutencao";
+    }
 
     @GetMapping
     public ModelAndView list() {
-        return new ModelAndView("list", Map.of("manutencoes", manutencaoRepository.findAll(Sort.by("item"))));
+        return new ModelAndView(
+                "list", Map.of("manutencoes", manutencaoRepository.findAll(Sort.by("item"))));
     }
 
     @GetMapping("/create")
@@ -47,48 +51,51 @@ public class ManutencaoController {
         return "redirect:/manutencao";
     }
 
+    // 🔹 Editar
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         Optional<Manutencao> manutencao = manutencaoRepository.findById(id);
 
-        if (manutencao.isPresent() && manutencao.get().getFinisheadAt() == null)
+        if (manutencao.isPresent()) {
             return new ModelAndView("form", Map.of("manutencao", manutencao.get()));
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, @Valid Manutencao manutencao, BindingResult result) {
+    public String edit(@Valid Manutencao manutencao, BindingResult result) {
         if (result.hasErrors())
             return "form";
 
-        // garante que estamos atualizando a entidade correta
-        manutencao.setId(id);
         manutencaoRepository.save(manutencao);
-
         return "redirect:/manutencao";
     }
 
-    // --- CORREÇÃO: adicionei barra inicial nos mappings de delete ---
+    // 🔹 Confirmar exclusão
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable Long id) {
         var manutencao = manutencaoRepository.findById(id);
-        if (manutencao.isPresent())
+        if (manutencao.isPresent()) {
             return new ModelAndView("delete", Map.of("manutencao", manutencao.get()));
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-
-    // POST de delete agora recebe o id na URL e deleta por id (mais robusto)
-    @PostMapping("/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
-        if (!manutencaoRepository.existsById(id)) {
+        } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        manutencaoRepository.deleteById(id);
-        return "redirect:/manutencao";
     }
 
+    // 🔹 Deletar de fato
+    @PostMapping("/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
+        var manutencao = manutencaoRepository.findById(id);
+        if (manutencao.isPresent()) {
+            manutencaoRepository.delete(manutencao.get());
+            return "redirect:/manutencao";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // 🔹 Finalizar manutenção
     @PostMapping("/finish/{id}")
     public String finish(@PathVariable Long id) {
         var optionalmanutencao = manutencaoRepository.findById(id);
