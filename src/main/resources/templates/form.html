@@ -21,8 +21,8 @@
     </nav>
 
     <main class="container">
-      <h1 th:unless="${manutencao.id}">Nova OS</h1>
-      <h1 th:if="${manutencao.id}">Editar OS</h1>
+      <h1 th:unless="${manutencao.id}">Nova</h1>
+      <h1 th:if="${manutencao.id}">Editar</h1>
 
       <form method="post" th:object="${manutencao}">
         <div class="mb-3">
