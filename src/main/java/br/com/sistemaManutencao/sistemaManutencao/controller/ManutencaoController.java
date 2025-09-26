@@ -72,7 +72,7 @@ public class ManutencaoController {
         return "redirect:/manutencao";
     }
 
-    // 🔹 Confirmar exclusão
+    
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable Long id) {
         var manutencao = manutencaoRepository.findById(id);
@@ -95,7 +95,6 @@ public class ManutencaoController {
         }
     }
 
-    // 🔹 Finalizar manutenção
     @PostMapping("/finish/{id}")
     public String finish(@PathVariable Long id) {
         var optionalmanutencao = manutencaoRepository.findById(id);

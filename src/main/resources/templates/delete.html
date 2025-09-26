@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sistema Manutencao - Excluir</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-  </head>
-  <body>
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/manutencao}">Sistema Manutencao</a>
-      </div>
-    </nav>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistema Manutencao - Excluir</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body { background-color: #121212; color: #e0e0e0; }
+    .btn-primary { background-color: #0d6efd; border-color: #0d6efd; }
+    .btn-danger { background-color: #dc3545; border-color: #dc3545; }
+    .btn:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/manutencao}">Sistema Manutencao</a>
+    </div>
+  </nav>
 
-    <main class="container">
-      <h1>Excluir</h1>
+  <main class="container mt-4">
+    <h1>Excluir Manutenção</h1>
+    <p>Tem certeza que deseja excluir a manutenção do item <strong th:text="${manutencao.item}"></strong>?</p>
+    <ul>
+      <li>Status: <span th:text="${manutencao.status}"></span></li>
+      <li>Setor: <span th:text="${manutencao.setor}"></span></li>
+      <li>Tipo de Problema: <span th:text="${manutencao.tipoProblema}"></span></li>
+      <li>Autor: <span th:text="${manutencao.autor}"></span></li>
+    </ul>
 
-      <p>
-        Tem certeza que deseja excluir a
-        <strong th:text="${manutencao.item}"></strong>?
-      </p>
-
-      <!-- POSTa para /manutencao/delete/{id} -->
-      <form th:action="@{/manutencao/delete/{id}(id=${manutencao.id})}" method="post">
-        <button type="submit" class="btn btn-danger">Excluir</button>
-        <a th:href="@{/manutencao}" class="btn btn-primary">Cancelar</a>
-      </form>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <form th:action="@{/manutencao/delete/{id}(id=${manutencao.id})}" method="post">
+      <button type="submit" class="btn btn-danger">Excluir</button>
+      <a th:href="@{/manutencao}" class="btn btn-primary">Cancelar</a>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -44,4 +44,23 @@ public class Manutencao {
 
     @Column(nullable = true)
     private LocalDate finisheadAt;
+
+    @Column(length = 50, nullable = false)
+    @NotBlank
+    private String status; 
+
+    @Column(length = 50, nullable = false)
+    @NotBlank
+    private String setor; 
+
+    @Column(length = 20, nullable = false)
+    @NotBlank
+    private String tipoProblema; 
+
+    @Column(length = 100, nullable = false)
+    @NotBlank
+    private String autor; 
+
+
+
 }
