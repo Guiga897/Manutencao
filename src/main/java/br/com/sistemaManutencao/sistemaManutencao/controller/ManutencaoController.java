@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/manutencao")
-public class ManutecaoController {
+public class ManutencaoController {
 
     @Autowired
     ManutencaoRepository manutencaoRepository;
