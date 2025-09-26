@@ -25,11 +25,6 @@ public class ManutencaoController {
     @Autowired
     ManutencaoRepository manutencaoRepository;
 
-    // 🔹 Redireciona "/" para a listagem
-    @GetMapping("/")
-    public String home() {
-        return "redirect:/manutencao";
-    }
 
     @GetMapping
     public ModelAndView list() {
@@ -96,14 +91,16 @@ public class ManutencaoController {
     }
 
     @PostMapping("/finish/{id}")
-    public String finish(@PathVariable Long id) {
-        var optionalmanutencao = manutencaoRepository.findById(id);
-        if (optionalmanutencao.isPresent()) {
-            var manutencao = optionalmanutencao.get();
-            manutencao.setFinisheadAt(LocalDate.now());
-            manutencaoRepository.save(manutencao);
-            return "redirect:/manutencao";
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+public String finish(@PathVariable Long id) {
+    var optionalmanutencao = manutencaoRepository.findById(id);
+    if (optionalmanutencao.isPresent()) {
+        var manutencao = optionalmanutencao.get();
+        manutencao.setFinisheadAt(LocalDate.now());
+        manutencao.setStatus("Concluído"); // atualiza status automaticamente
+        manutencaoRepository.save(manutencao);
+        return "redirect:/manutencao";
     }
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+}
+
 }
