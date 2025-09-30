@@ -67,29 +67,6 @@ public class ManutencaoController {
         return "redirect:/manutencao";
     }
 
-    
-    @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable Long id) {
-        var manutencao = manutencaoRepository.findById(id);
-        if (manutencao.isPresent()) {
-            return new ModelAndView("delete", Map.of("manutencao", manutencao.get()));
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    // 🔹 Deletar de fato
-    @PostMapping("/delete/{id}")
-    public String deletePost(@PathVariable Long id) {
-        var manutencao = manutencaoRepository.findById(id);
-        if (manutencao.isPresent()) {
-            manutencaoRepository.delete(manutencao.get());
-            return "redirect:/manutencao";
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @PostMapping("/finish/{id}")
 public String finish(@PathVariable Long id) {
     var optionalmanutencao = manutencaoRepository.findById(id);
