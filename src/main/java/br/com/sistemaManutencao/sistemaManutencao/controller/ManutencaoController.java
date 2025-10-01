@@ -19,7 +19,7 @@ import br.com.sistemaManutencao.sistemaManutencao.repository.ManutencaoRepositor
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/sistema_manutencao")
+@RequestMapping("/manutencao")
 public class ManutencaoController {
 
     @Autowired
