@@ -7,77 +7,78 @@
   <title th:if="${manutencao.id}">Editar Manutenção</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    body { background-color: #f9f9f9; color: #333; }
-    main { max-width: 700px; margin-top: 40px; }
-    .card { box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-radius: 10px; }
-    .btn-primary:hover { opacity: 0.9; }
+    body { background-color: #f4f6f9; color: #333; font-family: Arial, sans-serif; }
+    nav.navbar { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    main { max-width: 650px; margin-top: 40px; padding: 25px; background: #fff; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.08); }
+    h1 { font-size: 1.8rem; margin-bottom: 20px; color: #0d6efd; }
+    .form-label { font-weight: 600; color: #444; }
+    .form-control, .form-select { border-radius: 8px; padding: 10px; border: 1px solid #ccc; transition: 0.3s; }
+    .form-control:focus, .form-select:focus { border-color: #0d6efd; box-shadow: 0 0 5px rgba(13,110,253,0.3); }
+    .btn-primary { background-color: #0d6efd; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 500; }
+    .btn-primary:hover { background-color: #0b5ed7; }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+  <nav class="navbar navbar-light bg-light border-bottom">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold" th:href="@{/manutencao}">⚙️ Sistema de Manutenção</a>
+      <a class="navbar-brand" th:href="@{/manutencao}">Sistema de Manutenção</a>
     </div>
   </nav>
 
   <main class="container">
-    <div class="card p-4">
-      <h1 class="h4 mb-3" th:unless="${manutencao.id}">Nova Manutenção</h1>
-      <h1 class="h4 mb-3" th:if="${manutencao.id}">Editar Manutenção</h1>
+    <h1 th:unless="${manutencao.id}">Nova Manutenção</h1>
+    <h1 th:if="${manutencao.id}">Editar Manutenção</h1>
 
-      <form th:action="${manutencao.id} ? @{/manutencao/edit/{id}(id=${manutencao.id})} : @{/manutencao/create}" 
-            method="post" th:object="${manutencao}">
-        <input type="hidden" th:if="${manutencao.id}" th:field="*{id}" />
+    <form th:action="${manutencao.id} ? @{/manutencao/edit/{id}(id=${manutencao.id})} : @{/manutencao/create}" 
+          method="post" th:object="${manutencao}">
+      <input type="hidden" th:if="${manutencao.id}" th:field="*{id}" />
 
-        <div class="mb-3">
-          <label for="item" class="form-label">Item</label>
-          <input type="text" id="item" class="form-control" th:field="*{item}" required />
-        </div>
+      <div class="mb-3">
+        <label for="item" class="form-label">Item</label>
+        <input type="text" id="item" class="form-control" th:field="*{item}" required />
+      </div>
 
-        <div class="mb-3">
-          <label for="description" class="form-label">Descrição</label>
-          <input type="text" id="description" class="form-control" th:field="*{description}" required />
-        </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Descrição</label>
+        <input type="text" id="description" class="form-control" th:field="*{description}" required />
+      </div>
 
-        <div class="mb-3">
-          <label for="status" class="form-label">Status</label>
-          <select id="status" class="form-select" th:field="*{status}" required>
-            <option value="" disabled selected>Selecione o status</option>
-            <option value="Pendente">Pendente</option>
-            <option value="Em Andamento">Em Andamento</option>
-          </select>
-        </div>
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" class="form-select" th:field="*{status}" required>
+          <option value="" disabled selected>Selecione o status</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Em Andamento">Em Andamento</option>
+        </select>
+      </div>
 
-        <div class="mb-3">
-          <label for="setor" class="form-label">Setor</label>
-          <select id="setor" class="form-select" th:field="*{setor}" multiple required>
-            <option value="TI">TI</option>
-            <option value="Financeiro">Financeiro</option>
-            <option value="RH">RH</option>
-            <option value="Logística">Logística</option>
-          </select>
-        </div>
+      <div class="mb-3">
+        <label for="setor" class="form-label">Setor</label>
+        <select id="setor" class="form-select" th:field="*{setor}" multiple required>
+          <option value="TI">TI</option>
+          <option value="Financeiro">Financeiro</option>
+          <option value="RH">RH</option>
+          <option value="Logística">Logística</option>
+        </select>
+      </div>
 
-        <div class="mb-3">
-          <label for="tipoProblema" class="form-label">Tipo de Problema</label>
-          <select id="tipoProblema" class="form-select" th:field="*{tipoProblema}" required>
-            <option value="" disabled selected>Selecione o tipo</option>
-            <option value="Software">Software</option>
-            <option value="Hardware">Hardware</option>
-            <option value="Travamento">Travamento</option>
-          </select>
-        </div>
+      <div class="mb-3">
+        <label for="tipoProblema" class="form-label">Tipo de Problema</label>
+        <select id="tipoProblema" class="form-select" th:field="*{tipoProblema}" required>
+          <option value="" disabled selected>Selecione o tipo</option>
+          <option value="Software">Software</option>
+          <option value="Hardware">Hardware</option>
+          <option value="Travamento">Travamento</option>
+        </select>
+      </div>
 
-        <div class="mb-3">
-          <label for="autor" class="form-label">Autor</label>
-          <input type="text" id="autor" class="form-control" th:field="*{autor}" required />
-        </div>
+      <div class="mb-3">
+        <label for="autor" class="form-label">Autor</label>
+        <input type="text" id="autor" class="form-control" th:field="*{autor}" required />
+      </div>
 
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
-    </div>
+      <button type="submit" class="btn btn-primary w-100">Salvar</button>
+    </form>
   </main>
 </body>
 </html>
