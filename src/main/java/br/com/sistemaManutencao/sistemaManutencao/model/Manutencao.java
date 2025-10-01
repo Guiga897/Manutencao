@@ -39,8 +39,9 @@ public class Manutencao {
     @Column(length = 400, nullable = false)
     private String description;
 
+
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDate createdAt = LocalDate.now();
 
     @Column(nullable = true)
     private LocalDate finisheadAt;
@@ -60,7 +61,4 @@ public class Manutencao {
     @Column(length = 100, nullable = false)
     @NotBlank
     private String autor; 
-
-
-
 }
