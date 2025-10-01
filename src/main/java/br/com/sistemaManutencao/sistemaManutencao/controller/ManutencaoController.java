@@ -1,6 +1,7 @@
 package br.com.sistemaManutencao.sistemaManutencao.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -72,7 +73,7 @@ public String finish(@PathVariable Long id) {
     var optionalmanutencao = manutencaoRepository.findById(id);
     if (optionalmanutencao.isPresent()) {
         var manutencao = optionalmanutencao.get();
-        manutencao.setFinisheadAt(LocalDate.now());
+        manutencao.setFinisheadAt(LocalDateTime.now());
         manutencao.setStatus("Concluído"); // atualiza status automaticamente
         manutencaoRepository.save(manutencao);
         return "redirect:/manutencao";

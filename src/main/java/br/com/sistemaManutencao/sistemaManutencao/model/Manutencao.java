@@ -41,10 +41,10 @@ public class Manutencao {
 
 
     @Column(nullable = false)
-    private LocalDate createdAt = LocalDate.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = true)
-    private LocalDate finisheadAt;
+    private LocalDateTime finisheadAt;
 
     @Column(length = 50, nullable = false)
     @NotBlank

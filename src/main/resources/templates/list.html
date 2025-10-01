@@ -48,8 +48,8 @@
           <td th:text="${manutencao.setor}">-----</td>
           <td th:text="${manutencao.tipoProblema}">-----</td>
           <td th:text="${manutencao.autor}">-----</td>
-          <td th:text="${manutencao.createdAt}">-----</td>
-          <td th:text="${manutencao.finisheadAt != null ? manutencao.finisheadAt : '---'}">-----</td>
+          <td th:text="${#temporals.format(manutencao.createdAt, 'dd/MM/yyyy HH:mm:ss')}">-----</td>
+          <td th:text="${manutencao.finisheadAt != null ? #temporals.format(manutencao.finisheadAt, 'dd/MM/yyyy HH:mm:ss') : '---'}">-----</td>
           <td>
             <form class="d-inline" th:action="@{/manutencao/finish/{id}(id=${manutencao.id})}" method="post">
               <button type="submit" class="btn btn-sm btn-primary" th:attr="disabled=${manutencao.finisheadAt != null}">Finalizar</button>
