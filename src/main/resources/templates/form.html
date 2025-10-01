@@ -8,13 +8,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body { background-color: #f9f9f9; color: #333; }
-    .form-label { font-weight: 500; }
-    .form-control, .form-select { background-color: #fff; color: #333; }
-    .btn-primary { background-color: #0d6efd; border-color: #0d6efd; }
-    .btn-primary:hover { opacity: 0.9; }
     main { max-width: 700px; margin-top: 40px; }
-    .card { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-radius: 12px; }
-    .card-header { font-size: 1.25rem; font-weight: 600; }
+    .card { box-shadow: 0 4px 10px rgba(0,0,0,0.08); border-radius: 10px; }
+    .btn-primary:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -26,10 +22,8 @@
 
   <main class="container">
     <div class="card p-4">
-      <div class="card-header bg-white border-0 mb-3">
-        <h1 class="h4 m-0" th:unless="${manutencao.id}">Nova Manutenção</h1>
-        <h1 class="h4 m-0" th:if="${manutencao.id}">Editar Manutenção</h1>
-      </div>
+      <h1 class="h4 mb-3" th:unless="${manutencao.id}">Nova Manutenção</h1>
+      <h1 class="h4 mb-3" th:if="${manutencao.id}">Editar Manutenção</h1>
 
       <form th:action="${manutencao.id} ? @{/manutencao/edit/{id}(id=${manutencao.id})} : @{/manutencao/create}" 
             method="post" th:object="${manutencao}">
@@ -42,7 +36,7 @@
 
         <div class="mb-3">
           <label for="description" class="form-label">Descrição</label>
-          <textarea id="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
+          <input type="text" id="description" class="form-control" th:field="*{description}" required />
         </div>
 
         <div class="mb-3">
@@ -62,7 +56,6 @@
             <option value="RH">RH</option>
             <option value="Logística">Logística</option>
           </select>
-          <div class="form-text">Segure CTRL (ou CMD no Mac) para selecionar múltiplos setores.</div>
         </div>
 
         <div class="mb-3">
@@ -81,7 +74,7 @@
         </div>
 
         <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary px-4">💾 Salvar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
       </form>
     </div>
