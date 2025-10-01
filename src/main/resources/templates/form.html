@@ -7,63 +7,16 @@
   <title th:if="${manutencao.id}">Editar Manutenção</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    body {
-      background-color: #eef2f7;
-      color: #333;
-      font-family: "Segoe UI", sans-serif;
-    }
-    nav.navbar {
-      background: linear-gradient(90deg, #0d6efd, #0a58ca);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    nav .navbar-brand {
-      color: #fff !important;
-      font-weight: 600;
-    }
-    main {
-      max-width: 650px;
-      margin-top: 40px;
-      background: #fff;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-      color: #0d6efd;
-      font-weight: 600;
-      text-align: center;
-    }
-    .form-label {
-      font-weight: 500;
-      color: #444;
-    }
-    .form-control, .form-select {
-      background-color: #fdfdfd;
-      border: 1px solid #ced4da;
-      border-radius: 8px;
-      padding: 10px;
-      transition: all 0.2s;
-    }
-    .form-control:focus, .form-select:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, #0d6efd, #0a58ca);
-      border: none;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-weight: 500;
-    }
-    .btn-primary:hover {
-      opacity: 0.95;
-    }
+    body { background-color: #f9f9f9; color: #333; }
+    .form-label { font-weight: 500; }
+    .form-control, .form-select { background-color: #fff; color: #333; }
+    .btn-primary { background-color: #0d6efd; border-color: #0d6efd; }
+    .btn-primary:hover { opacity: 0.9; }
+    main { max-width: 600px; margin-top: 30px; }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light">
+  <nav class="navbar navbar-light bg-light border-bottom">
     <div class="container-fluid">
       <a class="navbar-brand" th:href="@{/manutencao}">Sistema de Manutenção</a>
     </div>
@@ -121,7 +74,7 @@
         <input type="text" id="autor" class="form-control" th:field="*{autor}" required />
       </div>
 
-      <button type="submit" class="btn btn-primary w-100">Salvar</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
   </main>
 </body>
